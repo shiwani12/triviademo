@@ -53,6 +53,10 @@ class MainVC: UIViewController {
         arrBtn1 = [btnArr(btn: btnCheck1, lbl: lblColor1),btnArr(btn: btnCheck2, lbl: lblColor2),btnArr(btn: btnCheck3, lbl: lblColor3),btnArr(btn: btnCheck4, lbl: lblColor4)]
         hideShow()
         self.title = "Trivia"
+        btnRadio1.setImage(Asset.RadioSelect.image, for: .normal)
+        btnradio2.setImage(Asset.RadioUnselect.image, for: .normal)
+        btnRadio3.setImage(Asset.RadioUnselect.image, for: .normal)
+        btnRadio4.setImage(Asset.RadioUnselect.image, for: .normal)
         btnCheck1.setImage(Asset.Check.image, for: .normal)
         btnCheck2.setImage(Asset.Check.image, for: .normal)
         btnCheck3.setImage(Asset.Check.image, for: .normal)
@@ -109,10 +113,12 @@ extension MainVC{
                viewNum = 2
                hideShow()
            case 2:
-               let vc = self.storyboard?.instantiateViewController(identifier: "SummaryVC") as! SummaryVC
+               
                var textGet : String = ""
+               var goForward : Bool = false
                for (num,val) in arrBtn1.enumerated(){
                    if val.btn.currentImage == Asset.Check.image{
+                       goForward = true
                        if num == 0{
                          textGet = val.lbl.text!
                        }else{
@@ -120,9 +126,19 @@ extension MainVC{
                        }
                    }
                }
+               if goForward{
+               let vc = self.storyboard?.instantiateViewController(identifier: "SummaryVC") as! SummaryVC
+               
                dtaShow.dtaquestion.append(dtaQuestion(question: lbl3.text!, answer: textGet))
+               var data = UserDefaults.standard.getDta()
+               let dtaGet = saveData(date: Date.getCurrentDate(), name: dtaShow.name, dtaquestion: dtaShow.dtaquestion)
+               data.arrSave.append(dtaGet)
+               UserDefaults.standard.saveDtaQuestion(data)
                vc.dtaShow = dtaShow
                self.navigationController?.pushViewController(vc, animated: true)
+               }else{
+                self.alert(message: "Please select atleast one option",title: "Alert")
+            }
            default:
                print("yes")
            }

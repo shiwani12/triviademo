@@ -32,19 +32,13 @@ class SummaryVC: UIViewController {
 //EXTERMAL FUNCTION
 extension SummaryVC{
     @objc func btnFinsihAct(_ sender : UIButton){
-    var data = UserDefaults.standard.getDta()
-    let dtaGet = saveData(date: Date.getCurrentDate(), name: dtaShow.name, dtaquestion: dtaShow.dtaquestion)
-    data.arrSave.append(dtaGet)
-    UserDefaults.standard.saveDtaQuestion(data)
+    
     let vc = self.storyboard?.instantiateViewController(identifier: "MainVC") as! MainVC
     vc.viewNum = 0
     self.navigationController?.pushViewController(vc, animated: true)
     }
     @objc func btnHistoryAct(_ sender : UIButton){
-    var data = UserDefaults.standard.getDta()
-    let dtaGet = saveData(date: Date.getCurrentDate(), name: dtaShow.name, dtaquestion: dtaShow.dtaquestion)
-    data.arrSave.append(dtaGet)
-    UserDefaults.standard.saveDtaQuestion(data)
+                    
     let vc = self.storyboard?.instantiateViewController(identifier: "HistoryVC") as! HistoryVC
     self.navigationController?.pushViewController(vc, animated: true)
     }
